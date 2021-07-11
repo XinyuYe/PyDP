@@ -65,9 +65,9 @@ RUN poetry config virtualenvs.in-project true
 
 # Build the bindings using Bazel and create a python wheel
 RUN poetry env use ${PYTHON_VERSION} && \
-    ${HOME}/${BAZELISK_BINARY} build --config linux src/python:pydp  --verbose_failures
+    ${HOME}/${BAZELISK_BINARY} build --config linux src/python:pydp --verbose_failures
 
-RUN cp -f ./bazel-bin/src/bindings/_pydp.so ./pydp && \
+RUN cp bazel-bin/src/bindings/_pydp.so src/pydp && \
     rm -rf dist/ && \
     poetry run python setup.py bdist_wheel && \
     poetry add dist/*.whl
